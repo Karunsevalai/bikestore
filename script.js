@@ -1,5 +1,5 @@
 
-let data='{"bikes":[{"img":"./images/imga1.jpg","name":"pulsor","no":123,"price":10000},{"img":"./images/imgb1.jpg","name":"platina","no":1223,"price":20000}]}';
+let data='{"bikes":[{"img":"./images/imga1.jpg","name":"pulsor","no":123,"price":10000,"model":2014},{"img":"./images/imgb1.jpg","name":"platina","no":1223,"price":20000,"model":2009}]}';
 
 
 let obje=JSON.parse(data);
@@ -15,6 +15,18 @@ obje.bikes.sort(function(a,b){
     return a.price - b.price;
 });
 render();
+}
+function modeldec(){
+    obje.bikes.sort(function(a,b){
+        return b.model - a.model;
+    });
+    render();
+}
+function modelasse(){
+    obje.bikes.sort(function(a,b){
+        return a.model - b.model;
+    });
+    render();
 }
 var con=document.getElementById("c");
 var i=0;
@@ -32,21 +44,34 @@ var co=document.createElement("div");
 co.setAttribute('class','contend');
 var p1=document.createElement("p");
 var p2=document.createElement("p");
-var p3=document.createElement("p");
-p1.innerHTML=`Bike Model: ${obje.bikes[i].name}`;
-p2.innerHTML=`Bike No: ${obje.bikes[i].no}`;
-p3.innerHTML=`Price: ${obje.bikes[i++].price}`;
+p1.innerHTML=`Bike No: ${obje.bikes[i].no}`;
+p2.innerHTML=`Model: ${obje.bikes[i].model} `;
 co.appendChild(p1);
 co.appendChild(p2);
-co.appendChild(p3);
 
 //content
+
+//foot
+var foot=document.createElement("div");
+foot.setAttribute('class','foot');
+var p2=document.createElement("p");
+p2.setAttribute('class','name');
+var p3=document.createElement("p");
+p2.innerHTML=`Bike Name: ${obje.bikes[i].name}`;
+p3.innerHTML=`Price: ₹ ${obje.bikes[i].price}`;
+foot.appendChild(p2);
+foot.appendChild(p3);
+
+//fott
     var pdiv=document.createElement("div");
     pdiv.innerHTML="";
     pdiv.setAttribute('class','Product');
+    pdiv.setAttribute('data-item',`${obje.bikes[i++].name}`);
+
     con.appendChild(pdiv);
     pdiv.appendChild(cimg);
     pdiv.appendChild(co);
+    pdiv.appendChild(foot);
     }
 function render(){
   //  var con=document.getElementById("c");
@@ -61,26 +86,38 @@ function render(){
     image.setAttribute('src',`${obje.bikes[i].img}`);//src
     cimg.appendChild(image);
     //img
-    //content
-    var co=document.createElement("div");
-    co.setAttribute('class','contend');
-    var p1=document.createElement("p");
-    var p2=document.createElement("p");
-    var p3=document.createElement("p");
-    p1.innerHTML=`Bike Model: ${obje.bikes[i].name}`;
-    p2.innerHTML=`Bike No: ${obje.bikes[i].no}`;
-    p3.innerHTML=`Price: ${obje.bikes[i++].price}`;
-    co.appendChild(p1);
-    co.appendChild(p2);
-    co.appendChild(p3);
-    
-    //content
+//content
+var co=document.createElement("div");
+co.setAttribute('class','contend');
+var p1=document.createElement("p");
+var p2=document.createElement("p");
+p1.innerHTML=`Bike No: ${obje.bikes[i].no}`;
+p2.innerHTML=`Model: ${obje.bikes[i].model} `;
+co.appendChild(p1);
+co.appendChild(p2);
+
+//content
+
+//foot
+var foot=document.createElement("div");
+foot.setAttribute('class','foot');
+var p2=document.createElement("p");
+var p3=document.createElement("p");
+p2.innerHTML=`Bike Model: ${obje.bikes[i].name}`;
+p3.innerHTML=`Price: ₹ ${obje.bikes[i].price}`;
+foot.appendChild(p2);
+foot.appendChild(p3);
+
+//fott
         var pdiv=document.createElement("div");
         pdiv.innerHTML="";
         pdiv.setAttribute('class','Product');
+        pdiv.setAttribute('data-item',`${obje.bikes[i++].name}`);
+
         con.appendChild(pdiv);
         pdiv.appendChild(cimg);
         pdiv.appendChild(co);
+        pdiv.appendChild(foot);
         }
         const nav=document.querySelector(".menu");
         const moon=document.getElementById("moon");
@@ -241,6 +278,8 @@ function remove(){
 
 const decrement=document.getElementById("low");
 const increment=document.getElementById("high");
+const latestModel=document.getElementById("latest");
+const oldModel=document.getElementById("old");
 
 decrement.addEventListener("click",()=>{
    asse();
@@ -248,4 +287,41 @@ decrement.addEventListener("click",()=>{
 increment.addEventListener("click",()=>{
    dec();
  });
+
+ latestModel.addEventListener("click",()=>{
+    modeldec();
+  });
+
+  oldModel.addEventListener("click",()=>{
+    modelasse();
+  });
+
+const d=document.getElementById("s");
+const products=document.querySelectorAll(".Product");
+
+d.addEventListener("keyup",(e)=>{
+    searchText=e.target.value.toLowerCase().trim();
+    products.forEach((Product)=>{
+        const na=Product.dataset.item;
+        if(na.includes(searchText)){
+            Product.style.display="block";
+        }
+        else{
+            Product.style.display="none";
+        }
+    });
+        
+    });
+
+
+// boxes.forEach((box)=>{
+//     const data=box.dataset.item;
+//     if(data.includes(searchText)){
+//         box.style.display="block";
+//     }
+//     else{
+//         box.style.display="none";
+        
+//     }
+// });
 
